@@ -15,7 +15,7 @@ import (
 
 type StoreServerEnv struct {
 	Host string
-	Port int
+	Port string
 }
 
 func DownloadWeatherCSV(env StoreServerEnv) echo.HandlerFunc {
@@ -73,7 +73,7 @@ func DownloadWeatherCSV(env StoreServerEnv) echo.HandlerFunc {
 }
 
 func executeQuery(env StoreServerEnv, query *pb.QueryMessage) (*pb.WeatherReply, error) {
-	conn, err := grpc.Dial(env.Host+":"+string(env.Port), grpc.WithInsecure())
+	conn, err := grpc.Dial(env.Host+":"+env.Port, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalln(err)
 		return nil, errors.New("can not connection store")

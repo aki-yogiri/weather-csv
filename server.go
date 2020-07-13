@@ -14,7 +14,7 @@ import (
 
 type ApiServerEnv struct {
 	Host string
-	Port int
+	Port string
 }
 
 func main() {
@@ -32,13 +32,13 @@ func main() {
 
 	e.GET("/weather", handler.DownloadWeatherCSV(storeServerEnv))
 
-	e.Start(apiServerEnv.Host + ":" + string(apiServerEnv.Port))
+	e.Start(apiServerEnv.Host + ":" + apiServerEnv.Port)
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGTERM, os.Interrupt)
 	<-quit
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	if err := e.Shutdown(ctx); err != nil {
 		e.Logger.Fatal(err)
