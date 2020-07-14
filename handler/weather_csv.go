@@ -60,12 +60,7 @@ func DownloadWeatherCSV(env StoreServerEnv) echo.HandlerFunc {
 			return echo.NewHTTPError(http.StatusInternalServerError)
 		}
 
-		data, err := makeCSV(resp)
-
-		if err != nil {
-			log.Printf("Error %v", err)
-			return echo.NewHTTPError(http.StatusInternalServerError)
-		}
+		data := makeCSV(resp)
 
 		c.Response().Header().Set(echo.HeaderContentDisposition, `attachment; filename="weather-`+time.Now().Format(layout)+`.csv"`)
 
@@ -77,8 +72,8 @@ func DownloadWeatherCSV(env StoreServerEnv) echo.HandlerFunc {
 func executeQuery(env StoreServerEnv, query *pb.QueryMessage) (*pb.WeatherReply, error) {
 	conn, err := grpc.Dial(env.Host+":"+env.Port, grpc.WithInsecure())
 	if err != nil {
-		log.Fatalln(err)
-		return nil, errors.New("can not connection store")
+		log.Printf("Error: %v", err)
+		return nil, errors.New("Could not connection store")
 	}
 	defer conn.Close()
 
@@ -86,13 +81,13 @@ func executeQuery(env StoreServerEnv, query *pb.QueryMessage) (*pb.WeatherReply,
 	res, err := client.GetWeather(context.TODO(), query)
 	if err != nil {
 		log.Printf("Error %v", err)
-		return nil, err
+		return nil, errors.New("Failed execute query")
 	}
 
 	return res, nil
 }
 
-func makeCSV(weather *pb.WeatherReply) ([]byte, error) {
+func makeCSV(weather *pb.WeatherReply) []byte {
 
 	content := make([]byte, 0)
 	encode := "\n"
@@ -118,6 +113,6 @@ func makeCSV(weather *pb.WeatherReply) ([]byte, error) {
 		content = append(content, encode...)
 	}
 
-	return content, nil
+	return content
 
 }
