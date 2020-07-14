@@ -8,13 +8,13 @@ CSVファイルで取得するAPIサービスです。
 ## 指定した地域の気象データを取得する
 
 ```
-/weather?location=Tokyo,jp
+GET /weather?location=Tokyo,jp
 ```
 
 ## 指定した地域の特定の期間の気象データを取得する
 
 ```
-/weather?location=Tokyo,jp&dtstart=2020-07-20T00:00:00Z&dtend=2020-06-20T00:00:00Z
+GET /weather?location=Tokyo,jp&dtstart=2020-07-20T00:00:00Z&dtend=2020-06-20T00:00:00Z
 ```
 
 # Build Image
