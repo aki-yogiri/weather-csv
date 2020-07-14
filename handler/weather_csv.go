@@ -67,7 +67,7 @@ func DownloadWeatherCSV(env StoreServerEnv) echo.HandlerFunc {
 			return echo.NewHTTPError(http.StatusInternalServerError)
 		}
 
-		c.Response().Header().Set(echo.HeaderContentDisposition, `attachment; filename=weather-"`+time.Now().Format(layout)+`.csv"`)
+		c.Response().Header().Set(echo.HeaderContentDisposition, `attachment; filename="weather-`+time.Now().Format(layout)+`.csv"`)
 
 		return c.Blob(http.StatusOK, "text/csv", data)
 
