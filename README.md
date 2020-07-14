@@ -58,4 +58,4 @@ weather-crawlerは以下の環境変数を利用します。
 | API_HOST | 0.0.0.0 | weather-csvのホスト名 |
 | API_PORT | 8080 | weather-csvのポート名 |
 | STORE_HOST | weather-store | weather-storeサービスのホスト名 |
-| STORE_PORT | 80 | weather-storeサービスのポート名 |
+| STORE_PORT | 80 | weather-storeサービスのポート番号 |
