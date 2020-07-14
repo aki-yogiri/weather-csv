@@ -83,7 +83,7 @@ func executeQuery(env StoreServerEnv, query *pb.QueryMessage) (*pb.WeatherReply,
 	client := pb.NewWeatherClient(conn)
 	res, err := client.GetWeather(context.TODO(), query)
 	if err != nil {
-		log.Fatalln(err)
+		log.Printf("Error %v", err)
 		return nil, err
 	}
 
