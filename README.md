@@ -39,7 +39,7 @@ Docker でのビルドを想定しています。
 ```
 $ git clone https://github.com/aki-yogiri/weather-csv.git
 $ cd weather-csv
-$ sudo docker build -t weather-csv:v1.0.0 .
+$ sudo docker build -t weather-csv:v1.0.1 .
 ```
 
 # Deploy on Kubernetes
