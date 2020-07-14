@@ -42,9 +42,9 @@ spec:
               value: "0.0.0.0"
             - name: API_PORT
               value: "8080"
-            - name: SERVER_HOST
+            - name: STORE_HOST
               value: "weather-store"
-            - name: SERVER_PORT
+            - name: STORE_PORT
               value: "80"
           ports:
             - containerPort: 8080
