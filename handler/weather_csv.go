@@ -22,7 +22,7 @@ func DownloadWeatherCSV(env StoreServerEnv) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		location := c.QueryParam("location")
 		if location != "" {
-			return errors.New("location not found")
+			return echo.NewHTTPError(http.StatusBadRequest, "need query param: location")
 		}
 
 		query := &pb.QueryMessage{}
