@@ -43,7 +43,7 @@ func DownloadWeatherCSV(env StoreServerEnv) echo.HandlerFunc {
 		}
 		dtend := c.QueryParam("dtend")
 		if dtend != "" {
-			t, err := time.Parse(layout, dtstart)
+			t, err := time.Parse(layout, dtend)
 			if err != nil {
 				return echo.NewHTTPError(http.StatusBadRequest, "Invalid format dtend: "+dtend)
 			}
