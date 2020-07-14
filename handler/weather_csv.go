@@ -21,7 +21,7 @@ type StoreServerEnv struct {
 func DownloadWeatherCSV(env StoreServerEnv) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		location := c.QueryParam("location")
-		if location != "" {
+		if location == "" {
 			return echo.NewHTTPError(http.StatusBadRequest, "need query param: location")
 		}
 
