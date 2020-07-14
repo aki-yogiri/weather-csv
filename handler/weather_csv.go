@@ -56,14 +56,14 @@ func DownloadWeatherCSV(env StoreServerEnv) echo.HandlerFunc {
 
 		resp, err := executeQuery(env, query)
 		if err != nil {
-			log.Fatalln(err)
+			log.Printf("Error %v", err)
 			return echo.NewHTTPError(http.StatusInternalServerError)
 		}
 
 		data, err := makeCSV(resp)
 
 		if err != nil {
-			log.Fatalln(err)
+			log.Printf("Error %v", err)
 			return echo.NewHTTPError(http.StatusInternalServerError)
 		}
 
