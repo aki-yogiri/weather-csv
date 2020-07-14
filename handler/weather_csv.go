@@ -33,38 +33,38 @@ func DownloadWeatherCSV(env StoreServerEnv) echo.HandlerFunc {
 		if dtstart != "" {
 			t, err := time.Parse(layout, dtstart)
 			if err != nil {
-				return errors.New("Invalid format dtstart: " + dtstart)
+				return echo.NewHTTPError(http.StatusBadRequest, "Invalid format dtstart: "+dtstart)
 			}
 
 			query.DatetimeStart, err = ptypes.TimestampProto(t)
 			if err != nil {
-				return errors.New("Invalid format dtstart: " + dtstart)
+				return echo.NewHTTPError(http.StatusBadRequest, "Invalid format dtstart: "+dtstart)
 			}
 		}
 		dtend := c.QueryParam("dtend")
 		if dtend != "" {
 			t, err := time.Parse(layout, dtstart)
 			if err != nil {
-				return errors.New("Invalid format dtend: " + dtend)
+				return echo.NewHTTPError(http.StatusBadRequest, "Invalid format dtend: "+dtend)
 			}
 
 			query.DatetimeEnd, err = ptypes.TimestampProto(t)
 			if err != nil {
-				return errors.New("Invalid format dtend: " + dtend)
+				return echo.NewHTTPError(http.StatusBadRequest, "Invalid format dtend: "+dtend)
 			}
 		}
 
 		resp, err := executeQuery(env, query)
 		if err != nil {
-			log.Fatal(err)
-			return err
+			log.Fatalln(err)
+			return echo.NewHTTPError(http.StatusInternalServerError)
 		}
 
 		data, err := makeCSV(resp)
 
 		if err != nil {
-			log.Fatal(err)
-			return err
+			log.Fatalln(err)
+			return echo.NewHTTPError(http.StatusInternalServerError)
 		}
 
 		return c.Blob(http.StatusOK, "text/csv", data)
