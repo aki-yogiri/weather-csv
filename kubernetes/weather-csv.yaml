@@ -35,7 +35,7 @@ spec:
       imagePullSecrets:
         - name: regcred
       containers:
-        - image: 418330922897.dkr.ecr.ap-northeast-1.amazonaws.com/weather-csv
+        - image: 418330922897.dkr.ecr.ap-northeast-1.amazonaws.com/weather-csv:v1.0.0
           name: weather-csv
           env:
             - name: API_HOST
