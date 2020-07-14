@@ -67,6 +67,8 @@ func DownloadWeatherCSV(env StoreServerEnv) echo.HandlerFunc {
 			return echo.NewHTTPError(http.StatusInternalServerError)
 		}
 
+		c.Response().Header().Set(echo.HeaderContentDisposition, `attachment; filename=weather-"`+time.Now().Format(layout)+`.csv"`)
+
 		return c.Blob(http.StatusOK, "text/csv", data)
 
 	}
@@ -96,9 +98,11 @@ func makeCSV(weather *pb.WeatherReply) ([]byte, error) {
 	encode := "\n"
 	separate := ","
 
-	content = append(content, "location,weather,temperature,clouds,wind,wind_deg"...)
+	content = append(content, "timestamp,location,weather,temperature,clouds,wind,wind_deg"...)
 	content = append(content, encode...)
 	for _, v := range weather.Weather {
+		content = append(content, ptypes.TimestampString(v.Timestamp)...)
+		content = append(content, separate...)
 		content = append(content, v.Location...)
 		content = append(content, separate...)
 		content = append(content, v.Weather...)
